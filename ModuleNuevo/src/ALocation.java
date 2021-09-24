@@ -2,6 +2,7 @@ public class ALocation implements Location{
     // Fields: xcord, ycordopening text, text triggered by -help, entities in that location.
     int _xCord, _yCord;
     String _openingText, _helpText;
+    boolean _shouldOpen;
     // type object, like monster or item or something
 
     //def gonna overload the constructor.  OR inherit it!
@@ -10,6 +11,7 @@ public class ALocation implements Location{
         _yCord = yCord;
         _openingText = openingText;
         _helpText = helpText;
+        _shouldOpen = true;
     }
 
     @Override
@@ -51,4 +53,9 @@ public class ALocation implements Location{
     public void setHelpText(String newHelp) {
         _helpText = newHelp;
     }
+
+    @Override
+    public void setShouldOpen(boolean newVal) { _shouldOpen = newVal;}
+
 }
+

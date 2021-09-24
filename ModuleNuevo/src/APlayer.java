@@ -1,13 +1,17 @@
 public class APlayer implements Player {
 
     Item[] _inventory;
-    int _health, _wealth;
+    int _health, _wealth, _x, _y;
     
     public APlayer() {
+        //MAKE something observe the X and Y of the player (maybe make each room observe Protagonist?)
         // initial values
         _inventory = new Item[10];
         _health = 30;
         _wealth = 10;
+        _x = 0;
+        _y = 0;
+
     }
 
     @Override
@@ -26,21 +30,25 @@ public class APlayer implements Player {
     }
 
     @Override
-    public void addToInventory(Item toBeAdded) {
-        // jk list the slots.
-        if (_inventory[9] != null) {
-            // or should it be 10 idk
-            for (int i = 0; i < _inventory.length; i++) {
-                if (_inventory[i] == null) {
-                    _inventory[i] = toBeAdded;
-                    i = 10;
-                    //pseudobreak
-                }
-            }
-        }
-        else {
-            System.out.println("Your inventory is full.");
-        }
+    public int getX() {
+        return _x;
+    }
+
+    @Override
+    public int getY() {
+        return _y;
+    }
+
+    @Override
+    public void setX(int newX) { _x = newX; }
+
+    @Override
+    public void setY(int newY) {
+        _y = newY;
+    }
+
+    @Override
+    public void addToInventory(Item toBeAdded, int slotNumber) {
     }
 
     @Override

@@ -7,7 +7,15 @@ public interface Player {
 
     int getWealth();
 
-    void addToInventory(Item toBeAdded);
+    int getX();
+
+    int getY();
+
+    void setX(int newX);
+
+    void setY(int newY);
+
+    void addToInventory(Item toBeAdded, int slotNumber);
     //overload this with other *types of items* that can be added to the inventory.
 
     void loseHealth(int toBeLost);

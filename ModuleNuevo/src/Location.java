@@ -14,4 +14,6 @@ public interface Location {
     void setOpeningText(String newOpening);
 
     void setHelpText(String newHelp);
+
+    void setShouldOpen(boolean newVal);
 }
