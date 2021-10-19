@@ -5,6 +5,8 @@ public class Main {
     boolean hasOpened = false;
     boolean overWorldMoveOk = true;
     boolean stillReadingInput = true;
+    //types of commands
+    String typeOfCommand = "nocommand";
     String XasString;
     String YasString;
     //public ALocation(int xCord, int yCord, String openingText, String helpText)
@@ -35,6 +37,8 @@ public class Main {
 
         System.out.println("Welcome to my ripoff of the game Zork! This is " +
                 "a text-based game....");
+        System.out.println("this is a list of possible commands: right (moves you right), " +
+                "left (moves you left), down (moves you down), up (moves you up)...addmorehere");
 
 
 
@@ -48,21 +52,59 @@ public class Main {
             if (!hasOpened) { System.out.println(currentLocation._openingText); }
             //if in new location, print the opening text of that location
 
-            System.out.println("pls input x for testing movement");
+            System.out.println("pls input (right/left/up/down) for testing");
             String str = sc.next();
             //scan.nextLine vs scan.next
-            if (str.equals("x")) {
-                pro.setX(pro.getX()+1);
+            switch (str) {
+                case "right" -> {
+                    pro.setX(pro.getX()+1);
+                    typeOfCommand = "overworldMovement";
+                }
+                case "up" -> {
+                    pro.setY(pro.getY()+1);
+                    typeOfCommand = "overworldMovement";
+                }
+                case "left" -> {
+                    pro.setX(pro.getX()-1);
+                    typeOfCommand = "overworldMovement";
+                }
+                case "down" -> {
+                    pro.setY(pro.getY()-1);
+                    typeOfCommand = "overworldMovement";
+                }
             }
-            // validate that the player is in bounds
+
+            // validate that the player is in bounds (if type of command is overworld movement)
+            switch (typeOfCommand) {
+                case "overworldMovement" -> {
+                    if (pro.getX() < 0) {
+                        System.out.println("error! too far left!");
+                        pro.setX(pro.getX()+1);
+                        //maybe print flavor text based on the location
+                    }
+                    if (pro.getX() > 10) {
+                        System.out.println("error! too far right!");
+                        pro.setX(pro.getX()-1);
+                    }
+                    if (pro.getY() < 0) {
+                        System.out.println("error! too far down!");
+                        pro.setY(pro.getY()+1);
+                        //flavor text and decide height too
+                    }
+                    if (pro.getY() > 10) {
+                        System.out.println("error! too high!");
+                        pro.setY(pro.getY()-1);
+                    }
+                }
+                //end of case overworld movement
+            }
 
             XasString = Integer.toString(pro.getX());
             YasString = Integer.toString(pro.getY());
-            //debugging
-            System.out.println("Xas string: " + XasString);
-            System.out.println("Yas string: " + YasString);
-            System.out.println(XasString + YasString);
-            //end debugging
+            // make string for better concatenation in the future
+            System.out.println("Your current coordinates are: ("
+            + XasString +" ," + YasString + ")");
+            //tell player where they are!
             switch (XasString + YasString) {
                 case "00" -> currentLocation = loc1;
                 case "10" -> currentLocation = loc2;
@@ -73,6 +115,8 @@ public class Main {
 
             hasOpened = tempCurrLoc == currentLocation;
             //if in new location, set opening text to activate, otherwise don't
+            typeOfCommand = "nocommand";
+            //reset this variable
         }
         //end of first while loop
 
