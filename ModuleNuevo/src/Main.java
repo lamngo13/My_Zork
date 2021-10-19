@@ -1,8 +1,10 @@
 import java.util.*;
 public class Main {
 
-    //prob gonna define constants
     boolean isPlaying = true;
+    boolean hasOpened = false;
+    boolean overWorldMoveOk = true;
+    boolean stillReadingInput = true;
     String XasString;
     String YasString;
     //public ALocation(int xCord, int yCord, String openingText, String helpText)
@@ -12,12 +14,14 @@ public class Main {
     ALocation loc4 = new ALocation(3,0,"open4","help4");
     //make a (fake, intuitive) 2d array of literally all the locations call it LOCATIONS
     ALocation currentLocation = loc1;
+    ALocation tempCurrLoc = loc1;
     Scanner sc= new Scanner(System.in);
     Player pro = new APlayer();
 
     public static void main(String[] args) {
         Main runner = new Main();
         runner.run(args);
+
         }
 
 
@@ -31,10 +35,7 @@ public class Main {
 
         System.out.println("Welcome to my ripoff of the game Zork! This is " +
                 "a text-based game....");
-        //if you are a recruiter, this game implements, OOP, inheritance, observers/observables
-        //overloading
 
-        // add instructions below.
 
 
 
@@ -42,16 +43,18 @@ public class Main {
         //yoo maybe there should be a command class.
 
         while (isPlaying) {
-            //if not already currentLocation.setShouldOpen
-            System.out.println(currentLocation._openingText);
-            //bruhmachine
-            //scanner for user input.
-            System.out.println("pls input x asdf");
+            tempCurrLoc = currentLocation;
+            //store current location to check if player has moved to a different location
+            if (!hasOpened) { System.out.println(currentLocation._openingText); }
+            //if in new location, print the opening text of that location
+
+            System.out.println("pls input x for testing movement");
             String str = sc.next();
             //scan.nextLine vs scan.next
             if (str.equals("x")) {
                 pro.setX(pro.getX()+1);
             }
+            // validate that the player is in bounds
 
             XasString = Integer.toString(pro.getX());
             YasString = Integer.toString(pro.getY());
@@ -67,6 +70,9 @@ public class Main {
                 case "30" -> currentLocation = loc4;
             }
             if (currentLocation == loc4) { isPlaying = false; }
+
+            hasOpened = tempCurrLoc == currentLocation;
+            //if in new location, set opening text to activate, otherwise don't
         }
         //end of first while loop
 
