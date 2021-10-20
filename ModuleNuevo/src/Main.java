@@ -10,13 +10,20 @@ public class Main {
     String XasString;
     String YasString;
     //public ALocation(int xCord, int yCord, String openingText, String helpText)
-    ALocation loc1 = new ALocation(0,0,"open1","help1");
-    ALocation loc2 = new ALocation(1,0,"open2","help2");
-    ALocation loc3 = new ALocation(2,0,"open3","help3");
-    ALocation loc4 = new ALocation(3,0,"open4","help4");
-    //make a (fake, intuitive) 2d array of literally all the locations call it LOCATIONS
-    ALocation currentLocation = loc1;
-    ALocation tempCurrLoc = loc1;
+    //TODO make this below a separate function and just call it, because it's wayy too crowded
+    // public void makeLocations{ below }
+    ALocation loc0 = new ALocation(0,0,"open0","help0");
+    ALocation loc1 = new ALocation(0,1,"open1","help1");
+    ALocation loc2 = new ALocation(0,2,"open2","help2");
+    ALocation loc3 = new ALocation(1,0,"open3","help3");
+    ALocation loc4 = new ALocation(1,1,"open4","help4");
+    ALocation loc5 = new ALocation(1,2,"open5","help5");
+    ALocation loc6 = new ALocation(2,0,"open6","help6");
+    ALocation loc7 = new ALocation(2,1,"open7","help7");
+    ALocation loc8 = new ALocation(2,2,"open8","help8");
+
+    ALocation currentLocation = loc0;
+    ALocation tempCurrLoc = loc0;
     Scanner sc= new Scanner(System.in);
     Player pro = new APlayer();
 
@@ -35,11 +42,11 @@ public class Main {
 
         //maybe make an input class that has methods for each player input
 
-        System.out.println("Welcome to my ripoff of the game Zork! This is " +
-                "a text-based game....");
-        System.out.println("this is a list of possible commands: right (moves you right), " +
-                "left (moves you left), down (moves you down), up (moves you up)...addmorehere");
-
+        System.out.println("Welcome to my ripoff of the game Zork! This is a text-based game....");
+        //System.out.println("this is a list of possible commands: right (moves you right), " +
+                //"left (moves you left), down (moves you down), up (moves you up)...addmorehere");
+        System.out.println(" ");
+        System.out.println("Your current coordinates are (0,0) also btw only positive numbers allowed");
 
 
 
@@ -47,9 +54,14 @@ public class Main {
         //yoo maybe there should be a command class.
 
         while (isPlaying) {
+            //start debug
+            System.out.println("tempCurrLoc: " + tempCurrLoc._helpText);
+            System.out.println("currentLocation: " + currentLocation._helpText);
+            System.out.println("val of hasOpened: " + hasOpened );
+            //end debug
             tempCurrLoc = currentLocation;
             //store current location to check if player has moved to a different location
-            if (!hasOpened) { System.out.println(currentLocation._openingText); }
+            if (!hasOpened) { System.out.println("opening text for current location: " + currentLocation._openingText); }
             //if in new location, print the opening text of that location
 
             System.out.println("pls input (right/left/up/down) for testing");
@@ -82,7 +94,7 @@ public class Main {
                         pro.setX(pro.getX()+1);
                         //maybe print flavor text based on the location
                     }
-                    if (pro.getX() > 10) {
+                    if (pro.getX() > 2) {
                         System.out.println("error! too far right!");
                         pro.setX(pro.getX()-1);
                     }
@@ -91,7 +103,7 @@ public class Main {
                         pro.setY(pro.getY()+1);
                         //flavor text and decide height too
                     }
-                    if (pro.getY() > 10) {
+                    if (pro.getY() > 2) {
                         System.out.println("error! too high!");
                         pro.setY(pro.getY()-1);
                     }
@@ -106,14 +118,27 @@ public class Main {
             + XasString +" ," + YasString + ")");
             //tell player where they are!
             switch (XasString + YasString) {
-                case "00" -> currentLocation = loc1;
-                case "10" -> currentLocation = loc2;
-                case "20" -> currentLocation = loc3;
-                case "30" -> currentLocation = loc4;
+                case "00" -> currentLocation = loc0;
+                case "01" -> currentLocation = loc1;
+                case "02" -> currentLocation = loc2;
+                case "10" -> currentLocation = loc3;
+                case "11" -> currentLocation = loc4;
+                case "12" -> currentLocation = loc5;
+                case "20" -> currentLocation = loc6;
+                case "21" -> currentLocation = loc7;
+                case "22" -> currentLocation = loc8;
             }
-            if (currentLocation == loc4) { isPlaying = false; }
 
+            //start debug
+            //System.out.println("tempCurrLoc: " + tempCurrLoc._helpText);
+            //System.out.println("currentLocation: " + currentLocation._helpText);
+            //System.out.println("val of hasOpened: " + hasOpened);
+            //System.out.println("end");
+            //System.out.println("");
+            //end debug
+            //hasOpened = (!(tempCurrLoc == currentLocation));
             hasOpened = tempCurrLoc == currentLocation;
+            //System.out.println("VAL OF hasopened: " + hasOpened);
             //if in new location, set opening text to activate, otherwise don't
             typeOfCommand = "nocommand";
             //reset this variable
