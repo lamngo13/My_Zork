@@ -1,5 +1,6 @@
 import java.util.*;
 public class Main {
+    //text to test version
 
     boolean isPlaying = true;
     boolean hasOpened = false;
