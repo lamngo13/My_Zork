@@ -4,11 +4,8 @@ public class APlayer implements Player {
     int _health, _wealth, _x, _y;
     
     public APlayer() {
-        //MAKE something observe the X and Y of the player (maybe make each room observe Protagonist?)
-        // initial values
         _inventory = new Item[10];
-        // name weight damage flavortext
-        _inventory[0] = new AnItem("Lam's guide to this world", 1, 1, "Hello! " +
+        _inventory[0] = new AnItem("welcome book", 1, 1, "Hello! " +
                 "TODO MAKE FLAVOR TEXT FOR THIS BOOK BUT ITS AN ITEM IN UR INVENTORY THATS COOL TO ME");
         _health = 30;
         _wealth = 10;
@@ -25,8 +22,9 @@ public class APlayer implements Player {
     @Override
     public void listInventory() {
         for(int i = 0; i < _inventory.length; i++) {
+            System.out.print("slot [" + i + "]: ");
             if (_inventory[i] == null) { System.out.print("empty, "); }
-            else { System.out.println(_inventory[i].getName()); }
+            else { System.out.print(_inventory[i].getName() + ", "); }
         }
     }
 

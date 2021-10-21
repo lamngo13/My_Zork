@@ -12,6 +12,8 @@ public class Main {
     String XasString;
     String YasString;
     int invCommand;
+    String startRoomOpenText = "Hello adventurer! You are in an open field.  To the north is a forrest.  On the ground there is a paper.  To pick up an item, type [pickup itemname] without the brackets.";
+            //TODO FORMAT PRINTED TEXT
 
     //TODO make this below a separate function and just call it, because it's wayy too crowded
     // public void makeLocations{ below }
@@ -41,11 +43,7 @@ public class Main {
                 " work in progress.");
         System.out.println("Right now you are a player that can move around in the overworld" +
                 " with a coordinate system using the following commands");
-        //System.out.println("\n");
-        System.out.println("current possible commands: (up/down/left/right/openInventory/help/currentLocation");
-        //System.out.println("pls input (right/left/up/down) for testing");
-        System.out.println("Your current coordinates are (0,0) [also only go in quadrant 1]");
-        System.out.println("\n");
+        System.out.println("Your current coordinates are (0,0) [also only go in quadrant 1]" + "\n");
 
         while (isPlaying) {
             tempCurrLoc = currentLocation;
@@ -53,7 +51,7 @@ public class Main {
             if (!hasOpened) { System.out.println("opening text for current location: " + currentLocation._openingText); }
             //if in new location, print the opening text of that location
 
-            System.out.println("pls input (right/left/up/down/help/currentlocation) for testing");
+            System.out.println("commands: (right/left/up/down/openInventory/help/currentLocation)");
             String str = sc.next();
             //scan.nextLine vs scan.next? Looks like scan.next is fine.
             switch (str) {
@@ -61,6 +59,7 @@ public class Main {
                     typeOfCommand = "inventory";
                     shouldOpenInventory = true;
                     pro.listInventory();
+                    System.out.print("\n");
                 }
                 case "currentLocation" -> {
                     typeOfCommand = "help";
@@ -85,6 +84,11 @@ public class Main {
                 case "down" -> {
                     pro.setY(pro.getY()-1);
                     typeOfCommand = "overworldMovement";
+                }
+
+                case "listCommands" -> {
+                    System.out.println("current possible commands: (listCommands/up/down/left/right/openInventory/help/currentLocation)");
+                    typeOfCommand = "help";
                 }
             }
 
@@ -113,8 +117,8 @@ public class Main {
                 // END OF OVERWORLD MOVEMENT TYPE COMMAND
                 case "inventory" -> {
                     while (shouldOpenInventory) {
-                        System.out.println("To access an item just type the slot number ie (0) accesses the first item" +
-                        "\n" + "type (999) to return from this item menu");
+                        System.out.println("\n" + "To access an item just type the slot number ie (0) accesses the first item" +
+                        "type (999) to return from this item menu");
                         invCommand = sc.nextInt();
                         if (invCommand == 999) {
                             shouldOpenInventory = false;

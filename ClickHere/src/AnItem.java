@@ -29,7 +29,7 @@ public class AnItem implements Item{
 
     @Override
     public void display() {
-        System.out.println(_flavortext);
+        System.out.println("flavortext: " + _flavortext);
         System.out.println("name: " + _name);
         System.out.println("weight: " + _weight);
         System.out.println("damage: " + _damage);
