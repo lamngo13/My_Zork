@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ModuleNuevo/ModuleNuevo.iml" filepath="$PROJECT_DIR$/ModuleNuevo/ModuleNuevo.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/My_Zork.iml" filepath="$PROJECT_DIR$/.idea/My_Zork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/theNewProject/theNewProject.iml" filepath="$PROJECT_DIR$/theNewProject/theNewProject.iml" />
     </modules>
   </component>
 </project>

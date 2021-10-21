@@ -7,6 +7,8 @@ public interface Location {
 
     String getHelpText();
 
+    String getName();
+
     void setXCord(int newX);
 
     void setYCord(int newY);
