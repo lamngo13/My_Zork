@@ -7,11 +7,10 @@ public class Main {
     boolean hasOpened = false;
     boolean overWorldMoveOk = true;
     boolean stillReadingInput = true;
-    //types of commands
     String typeOfCommand = "nocommand";
     String XasString;
     String YasString;
-    //public ALocation(int xCord, int yCord, String openingText, String helpText)
+
     //TODO make this below a separate function and just call it, because it's wayy too crowded
     // public void makeLocations{ below }
     ALocation loc0 = new ALocation(0,0,"open0","help text for location: 0 todo", "location 0");
@@ -47,17 +46,7 @@ public class Main {
         System.out.println("Your current coordinates are (0,0) [also only go in quadrant 1]");
         System.out.println("\n");
 
-
-
-        //commands: look around, name inventory, switch inventory
-        //yoo maybe there should be a command class.
-
         while (isPlaying) {
-            //start debug
-//            System.out.println("tempCurrLoc: " + tempCurrLoc._helpText);
-//            System.out.println("currentLocation: " + currentLocation._helpText);
-//            System.out.println("val of hasOpened: " + hasOpened );
-            //end debug
             tempCurrLoc = currentLocation;
             //store current location to check if player has moved to a different location
             if (!hasOpened) { System.out.println("opening text for current location: " + currentLocation._openingText); }
@@ -65,7 +54,7 @@ public class Main {
 
             System.out.println("pls input (right/left/up/down/help/currentlocation) for testing");
             String str = sc.next();
-            //scan.nextLine vs scan.next
+            //scan.nextLine vs scan.next? Looks like scan.next is fine.
             switch (str) {
                 case "currentlocation" -> {
                     typeOfCommand = "help";
@@ -136,16 +125,7 @@ public class Main {
                 case "22" -> currentLocation = loc8;
             }
 
-            //start debug
-            //System.out.println("tempCurrLoc: " + tempCurrLoc._helpText);
-            //System.out.println("currentLocation: " + currentLocation._helpText);
-            //System.out.println("val of hasOpened: " + hasOpened);
-            //System.out.println("end");
-            //System.out.println("");
-            //end debug
-            //hasOpened = (!(tempCurrLoc == currentLocation));
             hasOpened = tempCurrLoc == currentLocation;
-            //System.out.println("VAL OF hasopened: " + hasOpened);
             //if in new location, set opening text to activate, otherwise don't
             typeOfCommand = "nocommand";
             //reset this variable
@@ -154,25 +134,5 @@ public class Main {
 
         //nothing that matters should be below this lol
     }
-    //SOUTH
-    //EAST
-    //WEST
-    //LOOKAROUND
-    //HELP
-    //INVENTORY
-    //PICKUP
-    //ATTACK
-    //EQUIP
-    //EAT
-    //tell player that some commands require an object
-    //ie (EAT APPLE)
-    //STATS
-    //RENAME
-    // HELP RENAME
-    //explains how each command works with examples
-    public void inNorth() {
-        pro.setX(pro.getX()+1);
-    }
-
-    }
+}
 
