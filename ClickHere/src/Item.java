@@ -1,6 +1,8 @@
 public interface Item {
     String getName();
 
+    String getFlavorText();
+
     int getWeight();
 
     int getDamage();
@@ -10,4 +12,6 @@ public interface Item {
     void setWeight(int newWeight);
 
     void setDamage(int newDamage);
+
+    void display();
 }

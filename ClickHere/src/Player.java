@@ -15,6 +15,8 @@ public interface Player {
 
     void setY(int newY);
 
+    void listInventory();
+
     void addToInventory(Item toBeAdded, int slotNumber);
     //overload this with other *types of items* that can be added to the inventory.
 

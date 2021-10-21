@@ -5,11 +5,13 @@ public class Main {
 
     boolean isPlaying = true;
     boolean hasOpened = false;
+    boolean shouldOpenInventory = false;
     boolean overWorldMoveOk = true;
     boolean stillReadingInput = true;
     String typeOfCommand = "nocommand";
     String XasString;
     String YasString;
+    int invCommand;
 
     //TODO make this below a separate function and just call it, because it's wayy too crowded
     // public void makeLocations{ below }
@@ -31,7 +33,6 @@ public class Main {
     public static void main(String[] args) {
         Main runner = new Main();
         runner.run(args);
-
         }
 
     public void run(String[] args) {
@@ -41,7 +42,7 @@ public class Main {
         System.out.println("Right now you are a player that can move around in the overworld" +
                 " with a coordinate system using the following commands");
         //System.out.println("\n");
-        System.out.println("pls input (right/left/up/down/help/currentlocation)");
+        System.out.println("current possible commands: (up/down/left/right/openInventory/help/currentLocation");
         //System.out.println("pls input (right/left/up/down) for testing");
         System.out.println("Your current coordinates are (0,0) [also only go in quadrant 1]");
         System.out.println("\n");
@@ -56,7 +57,12 @@ public class Main {
             String str = sc.next();
             //scan.nextLine vs scan.next? Looks like scan.next is fine.
             switch (str) {
-                case "currentlocation" -> {
+                case "openInventory" -> {
+                    typeOfCommand = "inventory";
+                    shouldOpenInventory = true;
+                    pro.listInventory();
+                }
+                case "currentLocation" -> {
                     typeOfCommand = "help";
                     System.out.println("your current location is: " + currentLocation.getName());
                 }
@@ -104,7 +110,22 @@ public class Main {
                         pro.setY(pro.getY()-1);
                     }
                 }
-                //end of case overworld movement
+                // END OF OVERWORLD MOVEMENT TYPE COMMAND
+                case "inventory" -> {
+                    while (shouldOpenInventory) {
+                        System.out.println("To access an item just type the slot number ie (0) accesses the first item" +
+                        "\n" + "type (999) to return from this item menu");
+                        invCommand = sc.nextInt();
+                        if (invCommand == 999) {
+                            shouldOpenInventory = false;
+                        } else {
+                            pro.getInventory()[invCommand].display();
+                            System.out.println("\n");
+                            pro.listInventory();
+                        }
+                    }
+                }
+                //END OF INVENTORY TYPE COMMAND
             }
 
             XasString = Integer.toString(pro.getX());

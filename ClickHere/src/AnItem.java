@@ -1,5 +1,6 @@
 public class AnItem implements Item{
     String _name;
+    String _flavortext;
     int _weight, _damage;
     //def gonna inheit this bad boy
 
@@ -14,10 +15,28 @@ public class AnItem implements Item{
         _damage = damage;
     }
 
+    public AnItem(String name, int weight, int damage, String flavortext) {
+        _name = name;
+        _weight = weight;
+        _damage = damage;
+        _flavortext = flavortext;
+    }
+
     @Override
     public String getName() {
         return _name;
     }
+
+    @Override
+    public void display() {
+        System.out.println(_flavortext);
+        System.out.println("name: " + _name);
+        System.out.println("weight: " + _weight);
+        System.out.println("damage: " + _damage);
+    }
+
+    @Override
+    public String getFlavorText() { return _flavortext; }
 
     @Override
     public int getWeight() {
