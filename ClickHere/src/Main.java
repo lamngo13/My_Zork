@@ -1,36 +1,34 @@
 import java.util.*;
 public class Main {
-    //text to test version!!!
-    //TODO HELLO THIS IS RUNABLE
 
-    boolean isPlaying = true;
-    boolean hasOpened = false;
-    boolean shouldOpenInventory = false;
-    boolean overWorldMoveOk = true;
-    boolean stillReadingInput = true;
-    String typeOfCommand = "nocommand";
+    //TODO HELLO THIS IS RUNABLE
+    boolean isPlaying;
+    boolean hasOpened;
+    boolean shouldOpenInventory;
+    boolean overWorldMoveOk;
+    boolean stillReadingInput;
+
+    String typeOfCommand;
     String XasString;
     String YasString;
+    String startRoomOpenText;
+
     int invCommand;
-    String startRoomOpenText = "Hello adventurer! You are in an open field.  To the north is a forrest.  On the ground there is a paper.  To pick up an item, type [pickup itemname] without the brackets.";
-            //TODO FORMAT PRINTED TEXT
 
-    //TODO make this below a separate function and just call it, because it's wayy too crowded
-    // public void makeLocations{ below }
-    ALocation loc0 = new ALocation(0,0,"open0","help text for location: 0 todo", "location 0");
-    ALocation loc1 = new ALocation(0,1,"open1","help text for location: 1 todo", "location 1");
-    ALocation loc2 = new ALocation(0,2,"open2","help text for location: 2 todo", "location 2");
-    ALocation loc3 = new ALocation(1,0,"open3","help text for location: 3 todo", "location 3");
-    ALocation loc4 = new ALocation(1,1,"open4","help text for location: 4 todo", "location 4");
-    ALocation loc5 = new ALocation(1,2,"open5","help text for location: 5 todo", "location 5");
-    ALocation loc6 = new ALocation(2,0,"open6","help text for location: 6 todo", "location 6");
-    ALocation loc7 = new ALocation(2,1,"open7","help text for location: 7 todo", "location 7");
-    ALocation loc8 = new ALocation(2,2,"open8","help text for location: 8 todo", "location 8");
+    ALocation loc0;
+    ALocation loc1;
+    ALocation loc2;
+    ALocation loc3;
+    ALocation loc4;
+    ALocation loc5;
+    ALocation loc6;
+    ALocation loc7;
+    ALocation loc8;
+    ALocation currentLocation;
+    ALocation tempCurrLoc;
 
-    ALocation currentLocation = loc0;
-    ALocation tempCurrLoc = loc0;
-    Scanner sc= new Scanner(System.in);
-    Player pro = new APlayer();
+    Scanner sc;
+    Player pro;
 
     public static void main(String[] args) {
         Main runner = new Main();
@@ -158,6 +156,37 @@ public class Main {
         //end of first while loop
 
         //nothing that matters should be below this lol
+    }
+    // constructor of "main"
+    public Main() {
+        isPlaying = true;
+        hasOpened = false;
+        shouldOpenInventory = false;
+        overWorldMoveOk = true;
+        stillReadingInput = true;
+        typeOfCommand = "nocommand";
+        //XasString;
+        //YasString;
+        //invCommand;
+        startRoomOpenText = "Hello adventurer! You are in an open field.  To the north is a forrest.  On the ground there is a paper.  To pick up an item, type [pickup itemname] without the brackets.";
+        //TODO FORMAT PRINTED TEXT
+
+        //TODO make this below a separate function and just call it, because it's wayy too crowded
+        // public void makeLocations{ below }
+        loc0 = new ALocation(0,0,"open0","help text for location: 0 todo", "location 0");
+        loc1 = new ALocation(0,1,"open1","help text for location: 1 todo", "location 1");
+        loc2 = new ALocation(0,2,"open2","help text for location: 2 todo", "location 2");
+        loc3 = new ALocation(1,0,"open3","help text for location: 3 todo", "location 3");
+        loc4 = new ALocation(1,1,"open4","help text for location: 4 todo", "location 4");
+        loc5 = new ALocation(1,2,"open5","help text for location: 5 todo", "location 5");
+        loc6 = new ALocation(2,0,"open6","help text for location: 6 todo", "location 6");
+        loc7 = new ALocation(2,1,"open7","help text for location: 7 todo", "location 7");
+        loc8 = new ALocation(2,2,"open8","help text for location: 8 todo", "location 8");
+
+        currentLocation = loc0;
+        tempCurrLoc = loc0;
+        sc = new Scanner(System.in);
+        pro = new APlayer();
     }
 }
 
