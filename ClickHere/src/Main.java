@@ -37,6 +37,7 @@ public class Main {
 
     public void run(String[] args) {
 
+        myFormattedPrint("one two three four five six seven eight nine ten 11 tqwe a;sdlfkasdl; fgheigheigh loaoiehqeinamd fdfhadlifndaslif bruh machine THIS IS A TEST BRUH THIS IS SO COOL I MADE MY OWN PRINT FUNCTION IM SO HAPPY ABOUT IT");
         System.out.println("Welcome to my ripoff of the game Zork! This is a text-based game that is a" +
                 " work in progress.");
         System.out.println("Right now you are a player that can move around in the overworld" +
@@ -187,6 +188,22 @@ public class Main {
         tempCurrLoc = loc0;
         sc = new Scanner(System.in);
         pro = new APlayer();
+    }
+
+    //static function that automatically makes a new line so very long strings don't go off the screen
+    static void myFormattedPrint(String theString) {
+        int currStringLength = theString.length();
+        int counter = 0;
+        boolean areWeDone = false;
+        //boolean firstRun = true;
+        while (!areWeDone) {
+            //stuff ALSO ACCOUNT FOR SPACES but that's nitpicky tbh
+            System.out.print(theString.charAt(counter));
+            if ((counter % 70) == 0 && counter != 0) { System.out.print("\n"); }
+            counter++;
+            currStringLength--;
+            if (currStringLength == 0) { areWeDone = true; }
+        }
     }
 }
 
