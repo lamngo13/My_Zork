@@ -37,12 +37,8 @@ public class Main {
 
     public void run(String[] args) {
 
-        myFormattedPrint("one two three four five six seven eight nine ten 11 tqwe a;sdlfkasdl; fgheigheigh loaoiehqeinamd fdfhadlifndaslif bruh machine THIS IS A TEST BRUH THIS IS SO COOL I MADE MY OWN PRINT FUNCTION IM SO HAPPY ABOUT IT");
-        System.out.println("Welcome to my ripoff of the game Zork! This is a text-based game that is a" +
-                " work in progress.");
-        System.out.println("Right now you are a player that can move around in the overworld" +
-                " with a coordinate system using the following commands");
-        System.out.println("Your current coordinates are (0,0) [also only go in quadrant 1]" + "\n");
+        myFormattedPrint("Welcome to my work in progress game! It is strongly based on the text-based game Zork.  Right now, you can perform simple commands to move about the overworld.  The overworld is a coordinate system that only operates in the first quadrant.  Further instructions follow below.  Thank you and have fun! :)");
+        //welcome string
 
         while (isPlaying) {
             tempCurrLoc = currentLocation;
@@ -88,6 +84,10 @@ public class Main {
                 case "listCommands" -> {
                     System.out.println("current possible commands: (listCommands/up/down/left/right/openInventory/help/currentLocation)");
                     typeOfCommand = "help";
+                }
+                // not 100% sure on switch statements
+                default -> {
+                    myFormattedPrint("Error: invalid input. Current acceptable commands are (listCommands/up/down/left/right/openInventory/help/currentLocation)");
                 }
             }
 
@@ -170,7 +170,6 @@ public class Main {
         //YasString;
         //invCommand;
         startRoomOpenText = "Hello adventurer! You are in an open field.  To the north is a forrest.  On the ground there is a paper.  To pick up an item, type [pickup itemname] without the brackets.";
-        //TODO FORMAT PRINTED TEXT
 
         //TODO make this below a separate function and just call it, because it's wayy too crowded
         // public void makeLocations{ below }
@@ -191,19 +190,42 @@ public class Main {
     }
 
     //static function that automatically makes a new line so very long strings don't go off the screen
-    static void myFormattedPrint(String theString) {
+    public static void myFormattedPrint(String theString) {
         int currStringLength = theString.length();
         int counter = 0;
+        //int onlyCharCounter = 0;
         boolean areWeDone = false;
-        //boolean firstRun = true;
+        boolean shouldNewLineNext = false;
+        boolean firstRun = true;
+
         while (!areWeDone) {
-            //stuff ALSO ACCOUNT FOR SPACES but that's nitpicky tbh
             System.out.print(theString.charAt(counter));
-            if ((counter % 70) == 0 && counter != 0) { System.out.print("\n"); }
-            counter++;
-            currStringLength--;
-            if (currStringLength == 0) { areWeDone = true; }
+            if (shouldNewLineNext && theString.charAt(counter) == ' ') {
+                shouldNewLineNext = false;
+                System.out.print("\n");
+                counter++;
+                currStringLength--;
+            }
+            else {
+                if ((counter % 70) == 0 && !firstRun) {
+                    if (theString.charAt(counter) != ' ') {
+                        shouldNewLineNext = true;
+                    } else {
+                        System.out.print("\n");
+                    }
+                }
+
+                counter++;
+                currStringLength--;
+                firstRun = false;
+            }
+
+            if (currStringLength == 0) {
+                areWeDone = true;
+                System.out.print("\n");
+            }
         }
     }
+    //end of print static method.
 }
 
