@@ -2,6 +2,8 @@ import java.util.*;
 public class Main {
 
     //TODO HELLO THIS IS RUNABLE
+    //these variables are fields for them main class and in the main method, i create an instance of the
+    //
     boolean isPlaying;
     boolean hasOpened;
     boolean shouldOpenInventory;
@@ -37,6 +39,7 @@ public class Main {
 
     public void run(String[] args) {
 
+        //System.out.println("Welcome to my work in progress game! It is strongly based on the text-based game Zork.  Right now, you can perform simple commands to move about the overworld.  The overworld is a coordinate system that only operates in the first quadrant.  Further instructions follow below.  Thank you and have fun! :)");
         myFormattedPrint("Welcome to my work in progress game! It is strongly based on the text-based game Zork.  Right now, you can perform simple commands to move about the overworld.  The overworld is a coordinate system that only operates in the first quadrant.  Further instructions follow below.  Thank you and have fun! :)");
         //welcome string
 
