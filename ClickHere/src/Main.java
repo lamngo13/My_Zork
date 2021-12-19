@@ -1,21 +1,26 @@
 import java.util.*;
 public class Main {
 
-    //TODO HELLO THIS IS RUNABLE
-    //these variables are fields for them main class and in the main method, i create an instance of the
-    //
+    //TODO HELLO THIS IS RUNABLE!!!!!
+    //TODO I had to configure my machine a bit strange for class, so if you're getting some system error, go to file > project structure and change the SDK and build it
+
+    //these are fields for them main class and in the main method, i create an instance of 'main' because forming the code with encapsulating methods makes it a lot more readable
     boolean isPlaying;
     boolean hasOpened;
     boolean shouldOpenInventory;
     boolean overWorldMoveOk;
     boolean stillReadingInput;
+    boolean isInventory;
 
     String typeOfCommand;
     String XasString;
     String YasString;
     String startRoomOpenText;
+    String itemToAdd;
 
     int invCommand;
+    int addSlot;
+    int dropSlot;
 
     ALocation loc0;
     ALocation loc1;
@@ -32,67 +37,31 @@ public class Main {
     Scanner sc;
     Player pro;
 
+    AnItem testItem;
+
     public static void main(String[] args) {
         Main runner = new Main();
         runner.run(args);
         }
+        //Object oriented programming am I right
 
     public void run(String[] args) {
-
-        //System.out.println("Welcome to my work in progress game! It is strongly based on the text-based game Zork.  Right now, you can perform simple commands to move about the overworld.  The overworld is a coordinate system that only operates in the first quadrant.  Further instructions follow below.  Thank you and have fun! :)");
         myFormattedPrint("Welcome to my work in progress game! It is strongly based on the text-based game Zork.  Right now, you can perform simple commands to move about the overworld.  The overworld is a coordinate system that only operates in the first quadrant.  Further instructions follow below.  Thank you and have fun! :)");
-        //welcome string
+        //myFormattedPrint() prints a string with many line breaks instead of the regular print which prints one very long line.
+        System.out.println();
 
         while (isPlaying) {
             tempCurrLoc = currentLocation;
             //store current location to check if player has moved to a different location
-            if (!hasOpened) { System.out.println("opening text for current location: " + currentLocation._openingText); }
+            if (!hasOpened) {
+                System.out.println("opening text for current location: ");
+                myFormattedPrint(currentLocation._openingText);
+            }
             //if in new location, print the opening text of that location
 
             System.out.println("commands: (right/left/up/down/openInventory/help/currentLocation)");
             String str = sc.next();
-            //scan.nextLine vs scan.next? Looks like scan.next is fine.
-            switch (str) {
-                case "openInventory" -> {
-                    typeOfCommand = "inventory";
-                    shouldOpenInventory = true;
-                    pro.listInventory();
-                    System.out.print("\n");
-                }
-                case "currentLocation" -> {
-                    typeOfCommand = "help";
-                    System.out.println("your current location is: " + currentLocation.getName());
-                }
-                case "help" -> {
-                    typeOfCommand = "help";
-                    System.out.println(currentLocation._helpText);
-                }
-                case "right" -> {
-                    pro.setX(pro.getX()+1);
-                    typeOfCommand = "overworldMovement";
-                }
-                case "up" -> {
-                    pro.setY(pro.getY()+1);
-                    typeOfCommand = "overworldMovement";
-                }
-                case "left" -> {
-                    pro.setX(pro.getX()-1);
-                    typeOfCommand = "overworldMovement";
-                }
-                case "down" -> {
-                    pro.setY(pro.getY()-1);
-                    typeOfCommand = "overworldMovement";
-                }
-
-                case "listCommands" -> {
-                    System.out.println("current possible commands: (listCommands/up/down/left/right/openInventory/help/currentLocation)");
-                    typeOfCommand = "help";
-                }
-                // not 100% sure on switch statements
-                default -> {
-                    myFormattedPrint("Error: invalid input. Current acceptable commands are (listCommands/up/down/left/right/openInventory/help/currentLocation)");
-                }
-            }
+            processCommand(str);
 
             // validate that the player is in bounds (if type of command is overworld movement)
             switch (typeOfCommand) {
@@ -119,16 +88,43 @@ public class Main {
                 // END OF OVERWORLD MOVEMENT TYPE COMMAND
                 case "inventory" -> {
                     while (shouldOpenInventory) {
-                        System.out.println("\n" + "To access an item just type the slot number ie (0) accesses the first item" +
-                        "type (999) to return from this item menu");
+                        myFormattedPrint("\n" + "To access an item, type the slot number. example: 0 inspect the first item called welcome book. " +
+                                "Type 999 to return from this item menu. Type 111 to add an item to your inventory if there is an available item. " +
+                                "Type 222 to drop an item.");
                         invCommand = sc.nextInt();
                         if (invCommand == 999) {
                             shouldOpenInventory = false;
-                        } else {
-                            pro.getInventory()[invCommand].display();
-                            System.out.println("\n");
+                        } else if (invCommand == 111) {
+                            System.out.println("Type the name of the item you'd like to add.");
+                            System.out.print("possible items: ");
+                            for (int i = 0; i < 10; i++) {
+                                if (currentLocation.getIndexItem(i) != null) {
+                                    System.out.print(currentLocation.getIndexItem(i).getName());
+                                }
+                            }
+                            System.out.println();
+                            itemToAdd = sc.next();
+                            System.out.println("which slot would you like to add this to?");
+                            addSlot = sc.nextInt();
+                            pro.addToInventory(currentLocation.returnNamedItem(itemToAdd), addSlot);
+                            //now remove this item from the location
+                            currentLocation.removeItem(itemToAdd);
+                            pro.listInventory();
+                            System.out.println();
+
+                        } else if (invCommand == 222) {
+                            System.out.println("Type the slot containing the item you wish to drop.");
+                            dropSlot = sc.nextInt();
+                            currentLocation.addItem(pro.getInventory()[dropSlot]);
+                            pro.discardItem(pro.getInventory()[dropSlot]);
+                            System.out.println("item has been dropped");
                             pro.listInventory();
                         }
+                        else {
+                                pro.getInventory()[invCommand].display();
+                                System.out.println();
+                                pro.listInventory();
+                            }
                     }
                 }
                 //END OF INVENTORY TYPE COMMAND
@@ -138,7 +134,7 @@ public class Main {
             YasString = Integer.toString(pro.getY());
             // make string for better concatenation in the future
             System.out.println("Your current coordinates are: ("
-            + XasString +" ," + YasString + ")");
+            + XasString +" , " + YasString + ")");
             //tell player where they are!
             switch (XasString + YasString) {
                 case "00" -> currentLocation = loc0;
@@ -168,6 +164,7 @@ public class Main {
         shouldOpenInventory = false;
         overWorldMoveOk = true;
         stillReadingInput = true;
+        isInventory = false;
         typeOfCommand = "nocommand";
         //XasString;
         //YasString;
@@ -176,8 +173,12 @@ public class Main {
 
         //TODO make this below a separate function and just call it, because it's wayy too crowded
         // public void makeLocations{ below }
-        loc0 = new ALocation(0,0,"open0","help text for location: 0 todo", "location 0");
-        loc1 = new ALocation(0,1,"open1","help text for location: 1 todo", "location 1");
+
+        //items
+        testItem = new AnItem("testItem", 1, 1, "bruh machine");
+
+        loc0 = new ALocation(0,0,"this is the start: You wake up in an empty field.  You don't know who you are, but you have a feeling that you are in a Lord Of the Rings type world with heavy fantasy elements.  To the south west, and east, there is a forrest that seems to be impassable.  To the north, there is a small stream and mountains in the distance.","help text for location: Go to the north lol", "location 0");
+        loc1 = new ALocation(0,1,"there is a stream, and there should be an enemy soon. There's also an item on the ground called testItem.","help text for location: 1 todo", "location 1",testItem);
         loc2 = new ALocation(0,2,"open2","help text for location: 2 todo", "location 2");
         loc3 = new ALocation(1,0,"open3","help text for location: 3 todo", "location 3");
         loc4 = new ALocation(1,1,"open4","help text for location: 4 todo", "location 4");
@@ -186,6 +187,8 @@ public class Main {
         loc7 = new ALocation(2,1,"open7","help text for location: 7 todo", "location 7");
         loc8 = new ALocation(2,2,"open8","help text for location: 8 todo", "location 8");
 
+
+
         currentLocation = loc0;
         tempCurrLoc = loc0;
         sc = new Scanner(System.in);
@@ -193,6 +196,7 @@ public class Main {
     }
 
     //static function that automatically makes a new line so very long strings don't go off the screen
+    //I must be missing something haha because this took a while to code! Because for a while it would cut off mid-word
     public static void myFormattedPrint(String theString) {
         int currStringLength = theString.length();
         int counter = 0;
@@ -226,6 +230,60 @@ public class Main {
             if (currStringLength == 0) {
                 areWeDone = true;
                 System.out.print("\n");
+            }
+        }
+    }
+
+    //command method
+    public void processCommand(String input) {
+        switch (input) {
+            case "addItem" -> {
+                typeOfCommand = "inventory";
+                shouldOpenInventory = true;
+                //do another scanner?
+                //make another loop to loop through possible items and match name with getter
+                //but rn I'm just gonna test my method
+                pro.addToInventory(testItem,5);
+                pro.listInventory();
+            }
+            case "openInventory" -> {
+                typeOfCommand = "inventory";
+                shouldOpenInventory = true;
+                pro.listInventory();
+                System.out.print("\n");
+            }
+            case "currentLocation" -> {
+                typeOfCommand = "help";
+                System.out.println("your current location is: " + currentLocation.getName());
+            }
+            case "help" -> {
+                typeOfCommand = "help";
+                System.out.println(currentLocation._helpText);
+            }
+            case "right" -> {
+                pro.setX(pro.getX()+1);
+                typeOfCommand = "overworldMovement";
+            }
+            case "up" -> {
+                pro.setY(pro.getY()+1);
+                typeOfCommand = "overworldMovement";
+            }
+            case "left" -> {
+                pro.setX(pro.getX()-1);
+                typeOfCommand = "overworldMovement";
+            }
+            case "down" -> {
+                pro.setY(pro.getY()-1);
+                typeOfCommand = "overworldMovement";
+            }
+
+            case "listCommands" -> {
+                System.out.println("current possible commands: (listCommands/up/down/left/right/openInventory/help/currentLocation)");
+                typeOfCommand = "help";
+            }
+            // not 100% sure on switch statements
+            default -> {
+                myFormattedPrint("Error: invalid input. Current acceptable commands are (listCommands/up/down/left/right/openInventory/help/currentLocation)");
             }
         }
     }

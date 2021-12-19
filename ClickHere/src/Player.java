@@ -1,7 +1,7 @@
 public interface Player {
 
     //inventory health wealth
-    Item[] getInventory();
+    AnItem[] getInventory();
 
     int getHealth();
 
@@ -17,8 +17,8 @@ public interface Player {
 
     void listInventory();
 
-    void addToInventory(Item toBeAdded, int slotNumber);
-    //overload this with other *types of items* that can be added to the inventory.
+    void addToInventory(AnItem toBeAdded, int slotNumber);
+    //overload this with other *types of items* that can be added to the inventory. That's in the far future.
 
     void loseHealth(int toBeLost);
 
@@ -27,4 +27,6 @@ public interface Player {
     void setHealth(int newHealth);
 
     void setWealth(int newWealth);
+
+    void discardItem(AnItem toBeDiscarded);
 }
