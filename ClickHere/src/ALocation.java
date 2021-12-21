@@ -3,6 +3,7 @@ public class ALocation implements Location{
     String _openingText, _helpText, _name;
     boolean _shouldOpen;
     AnItem[] _items;
+    ANPC npcOne;
 //_items = new Item[10];
     //def gonna overload the constructor.  OR inherit it!
     public ALocation(int xCord, int yCord, String openingText, String helpText, String name) {
@@ -15,9 +16,24 @@ public class ALocation implements Location{
         _shouldOpen = true;
     }
 
-    public ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne) {
+    //intellej says theres a problem here?
+     public ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne) {
         _items = new AnItem[10];
         _items[0] = itemOne;
+        _xCord = xCord;
+        _yCord = yCord;
+        _openingText = openingText;
+        _helpText = helpText;
+        _name = name;
+        _shouldOpen = true;
+    }
+
+    //big huge constructor
+     public ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne, AnItem itemTwo, ANPC theNPCone) {
+        npcOne = theNPCone;
+        _items = new AnItem[10];
+        _items[0] = itemOne;
+        _items[1] = itemTwo;
         _xCord = xCord;
         _yCord = yCord;
         _openingText = openingText;

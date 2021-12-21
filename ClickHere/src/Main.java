@@ -11,11 +11,11 @@ public class Main {
     boolean overWorldMoveOk;
     boolean stillReadingInput;
     boolean isInventory;
+    boolean inCombat;
 
     String typeOfCommand;
     String XasString;
     String YasString;
-    String startRoomOpenText;
     String itemToAdd;
 
     int invCommand;
@@ -38,6 +38,7 @@ public class Main {
     Player pro;
 
     AnItem testItem;
+    AnItem note;
 
     public static void main(String[] args) {
         Main runner = new Main();
@@ -46,11 +47,16 @@ public class Main {
         //Object oriented programming am I right
 
     public void run(String[] args) {
-        myFormattedPrint("Welcome to my work in progress game! It is strongly based on the text-based game Zork.  Right now, you can perform simple commands to move about the overworld.  The overworld is a coordinate system that only operates in the first quadrant.  Further instructions follow below.  Thank you and have fun! :)");
+        myFormattedPrint("Welcome to my work in progress game! It is strongly based on the text-based game Zork and elements of dungeons and dragons.  Right now, you can perform simple commands to move about the overworld.  The overworld is a coordinate system that only operates in the first quadrant.  Further instructions follow below.  Thank you and have fun! :)");
         //myFormattedPrint() prints a string with many line breaks instead of the regular print which prints one very long line.
         System.out.println();
 
         while (isPlaying) {
+            //combat loop
+            while (inCombat) {
+                inCombat = false;
+            }
+            //end combat loop
             tempCurrLoc = currentLocation;
             //store current location to check if player has moved to a different location
             if (!hasOpened) {
@@ -88,7 +94,7 @@ public class Main {
                 // END OF OVERWORLD MOVEMENT TYPE COMMAND
                 case "inventory" -> {
                     while (shouldOpenInventory) {
-                        myFormattedPrint("\n" + "To access an item, type the slot number. example: 0 inspect the first item called welcome book. " +
+                        myFormattedPrint("\n" + "To access an item, type the slot number. example: typing 0 inspects the first item which is a water flask. " +
                                 "Type 999 to return from this item menu. Type 111 to add an item to your inventory if there is an available item. " +
                                 "Type 222 to drop an item.");
                         invCommand = sc.nextInt();
@@ -166,18 +172,20 @@ public class Main {
         stillReadingInput = true;
         isInventory = false;
         typeOfCommand = "nocommand";
+        inCombat = false;
         //XasString;
         //YasString;
         //invCommand;
-        startRoomOpenText = "Hello adventurer! You are in an open field.  To the north is a forrest.  On the ground there is a paper.  To pick up an item, type [pickup itemname] without the brackets.";
 
         //TODO make this below a separate function and just call it, because it's wayy too crowded
         // public void makeLocations{ below }
 
         //items
         testItem = new AnItem("testItem", 1, 1, "bruh machine");
+        note = new AnItem("note", 0, 1, "The note reads: Sorry I had to leave you here. After what happened in the forest, I went north to get help.  I should be back by morning.  Stay there and take care of yourself.\n" +
+                "-C" + '\n' + "You get a feeling that whoever C is, they should have returned by now…");
 
-        loc0 = new ALocation(0,0,"this is the start: You wake up in an empty field.  You don't know who you are, but you have a feeling that you are in a Lord Of the Rings type world with heavy fantasy elements.  To the south west, and east, there is a forrest that seems to be impassable.  To the north, there is a small stream and mountains in the distance.","help text for location: Go to the north lol", "location 0");
+        loc0 = new ALocation(0,0,"You wake up in an empty field.  You don't know where you are, but you're feeling okay.  To the south west, and east, there is a forest that seems to be impassable.  To the north, there is a small stream and mountains in the distance.  On the ground, there is a small note. To interact with objects in a location, type openInventory to open the inventory menu, then follow those instructions.\n","help text for location: Go to the north lol", "location 0", note);
         loc1 = new ALocation(0,1,"there is a stream, and there should be an enemy soon. There's also an item on the ground called testItem.","help text for location: 1 todo", "location 1",testItem);
         loc2 = new ALocation(0,2,"open2","help text for location: 2 todo", "location 2");
         loc3 = new ALocation(1,0,"open3","help text for location: 3 todo", "location 3");
@@ -207,6 +215,11 @@ public class Main {
 
         while (!areWeDone) {
             System.out.print(theString.charAt(counter));
+            //new stuff
+            //if (theString.charAt(counter) == '\n') {
+              //  counter = 0;
+            //}
+            //end new stuff
             if (shouldNewLineNext && theString.charAt(counter) == ' ') {
                 shouldNewLineNext = false;
                 System.out.print("\n");
