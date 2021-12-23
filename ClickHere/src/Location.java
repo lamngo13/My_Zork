@@ -26,4 +26,15 @@ public interface Location {
     void removeItem(String theName);
 
     void addItem(AnItem toAdd);
+
+    ANPC getSpecificNPC(int theIndex);
+
+    void listNPCs();
+
+    boolean getCombat();
+
+    void setCombat(boolean toSet);
+
+    void removeDeads();
+
 }

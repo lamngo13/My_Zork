@@ -17,10 +17,12 @@ public class Main {
     String XasString;
     String YasString;
     String itemToAdd;
+    String target;
 
     int invCommand;
     int addSlot;
     int dropSlot;
+    int yourWeaponNumber;
 
     ALocation loc0;
     ALocation loc1;
@@ -39,6 +41,11 @@ public class Main {
 
     AnItem testItem;
     AnItem note;
+    AnItem attackingItem;
+
+    ANPC wolfOne;
+    ANPC wolfTwo;
+    ANPC theTarget;
 
     public static void main(String[] args) {
         Main runner = new Main();
@@ -52,11 +59,67 @@ public class Main {
         System.out.println();
 
         while (isPlaying) {
+
             //combat loop
+            if (currentLocation.getCombat()) {
+                currentLocation.setCombat(false);
+                inCombat = true;
+            }
             while (inCombat) {
-                inCombat = false;
+                //inCombat = false;
+                System.out.print("You are in combat with: ");
+                currentLocation.listNPCs();
+                System.out.println();
+                for (int i = 0; i < 10; i++) {
+                    if (currentLocation.getSpecificNPC(i) != null) {
+                        System.out.print("The " + currentLocation.getSpecificNPC(i).getName() + "attacks you with its " + currentLocation.getSpecificNPC(i).getWeapon() + " for " + currentLocation.getSpecificNPC(i).getDamage() + " damage!");
+                        System.out.println();
+                        pro.loseHealth(currentLocation.getSpecificNPC(i).getDamage());
+                    }
+                }
+                System.out.println();
+                System.out.println("Your current health is: " + pro.getHealth());
+                System.out.print("Which target would you like to attack?: ");
+                currentLocation.listNPCs();
+                System.out.println();
+                target = sc.next();
+                //select the target
+                for (int j = 0; j < 10; j++) {
+                    if(currentLocation.getSpecificNPC(j) != null) {
+                        if (target.equals(currentLocation.getSpecificNPC(j).getName())) {
+                            theTarget = currentLocation.getSpecificNPC(j);
+                        }
+                    }
+                }
+                System.out.print("What item would you like to attack the target with? Give slot number:");
+                System.out.println();
+                pro.listInventory();
+                yourWeaponNumber = sc.nextInt();
+                attackingItem = pro.getInventory()[yourWeaponNumber];
+                System.out.println();
+                System.out.println("You attack the " + theTarget.getName() + " with your " + attackingItem.getName() + " for " + attackingItem.getDamage() + " damage!");
+                System.out.println();
+                theTarget.loseHealth(attackingItem.getDamage());
+                // this is just my thing for debugging
+                for (int l = 0; l < 10; l++) {
+                    if (currentLocation.getSpecificNPC(l) != null) {
+                        System.out.println("health of: " + currentLocation.getSpecificNPC(l).getName() + " is " + currentLocation.getSpecificNPC(l).getHealth());
+                        currentLocation.removeDeads();
+                        // test line!
+                    }
+                }
+                for (int m = 0; m < 10; m++) {
+                    inCombat = false;
+                    if (currentLocation.getSpecificNPC(m) != null) {
+                        inCombat = true;
+                    }
+                }
+
+
+                //end the loop at some point (inCombat = false)
             }
             //end combat loop
+
             tempCurrLoc = currentLocation;
             //store current location to check if player has moved to a different location
             if (!hasOpened) {
@@ -185,9 +248,15 @@ public class Main {
         note = new AnItem("note", 0, 1, "The note reads: Sorry I had to leave you here. After what happened in the forest, I went north to get help.  I should be back by morning.  Stay there and take care of yourself.\n" +
                 "-C" + '\n' + "You get a feeling that whoever C is, they should have returned by now…");
 
+        //NPCS
+        wolfOne = new ANPC(5,"wolfOne","jaws",3);
+        wolfTwo = new ANPC(5, "wolfTwo", "jaws", 3);
+        //public ANPC(int health, String name, String weapon, int damage)
+
         loc0 = new ALocation(0,0,"You wake up in an empty field.  You don't know where you are, but you're feeling okay.  To the south west, and east, there is a forest that seems to be impassable.  To the north, there is a small stream and mountains in the distance.  On the ground, there is a small note. To interact with objects in a location, type openInventory to open the inventory menu, then follow those instructions.\n","help text for location: Go to the north lol", "location 0", note);
         loc1 = new ALocation(0,1,"there is a stream, and there should be an enemy soon. There's also an item on the ground called testItem.","help text for location: 1 todo", "location 1",testItem);
-        loc2 = new ALocation(0,2,"open2","help text for location: 2 todo", "location 2");
+        loc2 = new ALocation(0,2,"The forrest narrows, and you are attacked by two wolves!","help text for location: 2 todo", "location 2", wolfOne, true, wolfTwo);
+        //ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne, AnItem itemTwo, ANPC theNPCone, boolean combat, ANPC theNPCtwo)
         loc3 = new ALocation(1,0,"open3","help text for location: 3 todo", "location 3");
         loc4 = new ALocation(1,1,"open4","help text for location: 4 todo", "location 4");
         loc5 = new ALocation(1,2,"open5","help text for location: 5 todo", "location 5");

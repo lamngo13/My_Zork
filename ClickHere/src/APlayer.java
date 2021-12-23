@@ -7,7 +7,7 @@ public class APlayer implements Player {
         _inventory = new AnItem[10];
         //_inventory[0] = new AnItem("welcome book", 1, 1, "Hello! " +
                 //"TOD MAKE FLAVOR TEXT FOR THIS BOOK BUT ITS AN ITEM IN UR INVENTORY THATS COOL TO ME");
-        //_inventory[1] = new AnItem("sword", 5, 5, "It is a sword.  You presume you can swing it at stuff");
+        _inventory[1] = new AnItem("sword", 5, 5, "It is a sword.  You presume you can swing it at stuff");
         _inventory[0] = new AnItem("water flask", 2, 2, "It is a flask of water");
         _health = 30;
         _wealth = 10;
@@ -77,12 +77,12 @@ public class APlayer implements Player {
 
     @Override
     public void loseHealth(int toBeLost) {
-
+        _health -= toBeLost;
     }
 
     @Override
     public void gainHealth(int toBeGained) {
-
+        _health =+ toBeGained;
     }
 
     @Override

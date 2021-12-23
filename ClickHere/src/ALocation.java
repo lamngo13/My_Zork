@@ -2,8 +2,10 @@ public class ALocation implements Location{
     int _xCord, _yCord;
     String _openingText, _helpText, _name;
     boolean _shouldOpen;
+    boolean _shouldStartCombat;
     AnItem[] _items;
-    ANPC npcOne;
+    ANPC[] _npcs;
+
 //_items = new Item[10];
     //def gonna overload the constructor.  OR inherit it!
     public ALocation(int xCord, int yCord, String openingText, String helpText, String name) {
@@ -28,9 +30,27 @@ public class ALocation implements Location{
         _shouldOpen = true;
     }
 
+    public ALocation(int xCord, int yCord, String openingText, String helpText, String name, ANPC theNPCone, boolean combat, ANPC theNPCtwo) {
+        _shouldStartCombat = true;
+        _npcs = new ANPC[10];
+        _npcs[0] = theNPCone;
+        _npcs[3] = theNPCtwo;
+        _items = new AnItem[10];
+        //_items[0] = itemOne;
+        //_items[1] = itemTwo;
+        _xCord = xCord;
+        _yCord = yCord;
+        _openingText = openingText;
+        _helpText = helpText;
+        _name = name;
+        _shouldOpen = true;
+    }
+
     //big huge constructor
-     public ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne, AnItem itemTwo, ANPC theNPCone) {
-        npcOne = theNPCone;
+     public ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne, AnItem itemTwo, ANPC theNPCone, ANPC theNPCtwo) {
+        _npcs = new ANPC[10];
+        _npcs[0] = theNPCone;
+        _npcs[3] = theNPCtwo;
         _items = new AnItem[10];
         _items[0] = itemOne;
         _items[1] = itemTwo;
@@ -125,6 +145,42 @@ public class ALocation implements Location{
             if (_items[i] == null) {
                 _items[i] = toAdd;
                 return;
+            }
+        }
+    }
+
+    @Override
+    public ANPC getSpecificNPC(int theIndex) {
+        return _npcs[theIndex];
+    }
+
+    @Override
+    public void listNPCs() {
+        for (int i = 0; i < 10; i++) {
+            if (_npcs[i] != null) {
+                System.out.print(_npcs[i].getName() + ", ");
+            }
+        }
+    }
+
+    @Override
+    public boolean getCombat() {
+        return _shouldStartCombat;
+    }
+
+    @Override
+    public void setCombat(boolean toSet) {
+        _shouldStartCombat = toSet;
+    }
+
+    @Override
+    public void removeDeads() {
+        for (int i = 0; i < 10; i++) {
+            if (_npcs[i] != null) {
+                if (_npcs[i].getHealth() <= 0) {
+                    System.out.println("The " + _npcs[i].getName() + " has died!");
+                    _npcs[i] = null;
+                }
             }
         }
     }
