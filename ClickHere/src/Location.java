@@ -5,7 +5,7 @@ public interface Location {
 
     String getOpeningText();
 
-    String getHelpText();
+    String getNextText();
 
     String getName();
 
@@ -18,6 +18,8 @@ public interface Location {
     void setHelpText(String newHelp);
 
     void setShouldOpen(boolean newVal);
+
+    boolean getShouldOpen();
 
     AnItem getIndexItem(int slot);
 

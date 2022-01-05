@@ -1,6 +1,6 @@
 public class ALocation implements Location{
     int _xCord, _yCord;
-    String _openingText, _helpText, _name;
+    String _openingText, _nextText, _name;
     boolean _shouldOpen;
     boolean _shouldStartCombat;
     AnItem[] _items;
@@ -13,7 +13,7 @@ public class ALocation implements Location{
         _xCord = xCord;
         _yCord = yCord;
         _openingText = openingText;
-        _helpText = helpText;
+        _nextText = helpText;
         _name = name;
         _shouldOpen = true;
     }
@@ -25,7 +25,7 @@ public class ALocation implements Location{
         _xCord = xCord;
         _yCord = yCord;
         _openingText = openingText;
-        _helpText = helpText;
+         _nextText = helpText;
         _name = name;
         _shouldOpen = true;
     }
@@ -41,7 +41,7 @@ public class ALocation implements Location{
         _xCord = xCord;
         _yCord = yCord;
         _openingText = openingText;
-        _helpText = helpText;
+        _nextText = helpText;
         _name = name;
         _shouldOpen = true;
     }
@@ -57,7 +57,7 @@ public class ALocation implements Location{
         _xCord = xCord;
         _yCord = yCord;
         _openingText = openingText;
-        _helpText = helpText;
+         _nextText = helpText;
         _name = name;
         _shouldOpen = true;
     }
@@ -78,8 +78,8 @@ public class ALocation implements Location{
     }
 
     @Override
-    public String getHelpText() {
-        return _helpText;
+    public String getNextText() {
+        return _nextText;
     }
 
     @Override
@@ -98,8 +98,11 @@ public class ALocation implements Location{
     }
 
     @Override
+    public boolean getShouldOpen() { return _shouldOpen; }
+
+    @Override
     public void setHelpText(String newHelp) {
-        _helpText = newHelp;
+        _nextText = newHelp;
     }
 
     @Override

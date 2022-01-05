@@ -26,7 +26,7 @@ public class Main {
 
     ALocation loc0;
     ALocation loc1;
-    ALocation loc2;
+    ALocation firstCombatZone;
     ALocation loc3;
     ALocation loc4;
     ALocation loc5;
@@ -51,7 +51,7 @@ public class Main {
         Main runner = new Main();
         runner.run(args);
         }
-        //Object oriented programming am I right
+        //encapsulated main methods am I right
 
     public void run(String[] args) {
         myFormattedPrint("Welcome to my work in progress game! It is strongly based on the text-based game Zork and elements of dungeons and dragons.  Right now, you can perform simple commands to move about the overworld.  The overworld is a coordinate system that only operates in the first quadrant.  Further instructions follow below.  Thank you and have fun! :)");
@@ -120,11 +120,14 @@ public class Main {
 
             tempCurrLoc = currentLocation;
             //store current location to check if player has moved to a different location
-            if (!hasOpened) {
-                System.out.println("opening text for current location: ");
+            if (currentLocation.getShouldOpen()) {
                 myFormattedPrint(currentLocation._openingText);
+                //mark current location as visited?? Below
+                currentLocation.setShouldOpen(false);
+            } else {
+                myFormattedPrint(currentLocation.getNextText());
             }
-            //if in new location, print the opening text of that location
+
 
             System.out.println("commands: (right/left/up/down/openInventory/help/currentLocation)");
             String str = sc.next();
@@ -206,7 +209,7 @@ public class Main {
             switch (XasString + YasString) {
                 case "00" -> currentLocation = loc0;
                 case "01" -> currentLocation = loc1;
-                case "02" -> currentLocation = loc2;
+                case "02" -> currentLocation = firstCombatZone;
                 case "10" -> currentLocation = loc3;
                 case "11" -> currentLocation = loc4;
                 case "12" -> currentLocation = loc5;
@@ -215,12 +218,15 @@ public class Main {
                 case "22" -> currentLocation = loc8;
             }
 
-            hasOpened = tempCurrLoc == currentLocation;
+            //currentLocation.setShouldOpen(false);
+            //LINE ABOVE IS A TEST
+            //hasOpened = tempCurrLoc == currentLocation;
+            //MOVED UP?
             //if in new location, set opening text to activate, otherwise don't
             typeOfCommand = "nocommand";
             //reset this variable
         }
-        //end of first while loop
+        //end of whole loop
 
         //nothing that matters should be below this lol
     }
@@ -253,7 +259,7 @@ public class Main {
 
         loc0 = new ALocation(0,0,"You wake up in an empty field.  You don't know where you are, but you're feeling okay.  To the south west, and east, there is a forest that seems to be impassable.  To the north, there is a small stream and mountains in the distance.  On the ground, there is a small note. To interact with objects in a location, type openInventory to open the inventory menu, then follow those instructions.\n","help text for location: Go to the north lol", "location 0", note);
         loc1 = new ALocation(0,1,"there is a stream, and there should be an enemy soon. There's also an item on the ground called testItem.","help text for location: 1 todo", "location 1",testItem);
-        loc2 = new ALocation(0,2,"The forrest narrows, and you are attacked by two wolves!","help text for location: 2 todo", "location 2", wolfOne, true, wolfTwo);
+        firstCombatZone = new ALocation(0,2,"The forrest narrows, and you are attacked by two wolves!","PRINTING NEXT TEXT", "location 2", wolfOne, true, wolfTwo);
         //ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne, AnItem itemTwo, ANPC theNPCone, boolean combat, ANPC theNPCtwo)
         loc3 = new ALocation(1,0,"open3","help text for location: 3 todo", "location 3");
         loc4 = new ALocation(1,1,"open4","help text for location: 4 todo", "location 4");
@@ -338,7 +344,7 @@ public class Main {
             }
             case "help" -> {
                 typeOfCommand = "help";
-                System.out.println(currentLocation._helpText);
+                System.out.println(currentLocation._nextText);
             }
             case "right" -> {
                 pro.setX(pro.getX()+1);
