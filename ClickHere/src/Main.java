@@ -112,11 +112,9 @@ public class Main {
                     inCombat = false;
                     if (currentLocation.getSpecificNPC(m) != null) {
                         inCombat = true;
+                        m = 10;
                     }
                 }
-
-
-                //end the loop at some point (inCombat = false)
             }
             //end combat loop
 
@@ -369,6 +367,5 @@ public class Main {
             }
         }
     }
-    //end of print static method.
 }
 

@@ -43,9 +43,9 @@ public class ANPC extends APlayer implements NPC {
     @Override
     public void loseHealth(int toLose) {
         _health -= toLose;
-        if (_health <= 0) {
-            System.out.println(_name + " has died!");
-
-        }
+//        if (_health <= 0) {
+//            System.out.println(_name + " has died!");
+//
+//        }
     }
 }
