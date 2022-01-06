@@ -1,6 +1,6 @@
 public class ALocation implements Location{
     int _xCord, _yCord;
-    String _openingText, _nextText, _name;
+    String _openingText, _nextText, _name, _postCombat;
     boolean _shouldOpen;
     boolean _shouldStartCombat;
     AnItem[] _items;
@@ -30,7 +30,8 @@ public class ALocation implements Location{
         _shouldOpen = true;
     }
 
-    public ALocation(int xCord, int yCord, String openingText, String helpText, String name, ANPC theNPCone, boolean combat, ANPC theNPCtwo) {
+    //combat zone constructor
+    public ALocation(int xCord, int yCord, String openingText, String helpText, String name, ANPC theNPCone, boolean combat, ANPC theNPCtwo, String postCombat) {
         _shouldStartCombat = true;
         _npcs = new ANPC[10];
         _npcs[0] = theNPCone;
@@ -44,6 +45,7 @@ public class ALocation implements Location{
         _nextText = helpText;
         _name = name;
         _shouldOpen = true;
+        _postCombat = postCombat;
     }
 
     //big huge constructor
@@ -187,6 +189,9 @@ public class ALocation implements Location{
             }
         }
     }
+
+    @Override
+    public String getPostCombat() { return _postCombat; }
 
 }
 

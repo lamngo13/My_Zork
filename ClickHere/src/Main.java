@@ -24,7 +24,7 @@ public class Main {
     int dropSlot;
     int yourWeaponNumber;
 
-    ALocation loc0;
+    ALocation startingLocation;
     ALocation loc1;
     ALocation firstCombatZone;
     ALocation loc3;
@@ -54,11 +54,21 @@ public class Main {
         //encapsulated main methods am I right
 
     public void run(String[] args) {
-        myFormattedPrint("Welcome to my work in progress game! It is strongly based on the text-based game Zork and elements of dungeons and dragons.  Right now, you can perform simple commands to move about the overworld.  The overworld is a coordinate system that only operates in the first quadrant.  Further instructions follow below.  Thank you and have fun! :)");
+        myFormattedPrint("Welcome to my work in progress game! It is strongly based on the text-based game Zork and elements of dungeons and dragons.  Further instructions follow below.  Thank you and have fun! :)");
         //myFormattedPrint() prints a string with many line breaks instead of the regular print which prints one very long line.
         System.out.println();
 
         while (isPlaying) {
+
+            //opening/next text logic
+            tempCurrLoc = currentLocation;
+            if (currentLocation.getShouldOpen()) {
+                myFormattedPrint(currentLocation._openingText);
+                //mark current location as visited?? Below
+                currentLocation.setShouldOpen(false);
+            } else {
+                myFormattedPrint(currentLocation.getNextText());
+            }
 
             //combat loop
             if (currentLocation.getCombat()) {
@@ -117,15 +127,8 @@ public class Main {
                 }
             }
             //end combat loop
-
-            tempCurrLoc = currentLocation;
-            //store current location to check if player has moved to a different location
-            if (currentLocation.getShouldOpen()) {
-                myFormattedPrint(currentLocation._openingText);
-                //mark current location as visited?? Below
-                currentLocation.setShouldOpen(false);
-            } else {
-                myFormattedPrint(currentLocation.getNextText());
+            if (currentLocation.getPostCombat() != null) {
+                myFormattedPrint(currentLocation.getPostCombat());
             }
 
 
@@ -207,7 +210,7 @@ public class Main {
             + XasString +" , " + YasString + ")");
             //tell player where they are!
             switch (XasString + YasString) {
-                case "00" -> currentLocation = loc0;
+                case "00" -> currentLocation = startingLocation;
                 case "01" -> currentLocation = loc1;
                 case "02" -> currentLocation = firstCombatZone;
                 case "10" -> currentLocation = loc3;
@@ -257,9 +260,9 @@ public class Main {
         wolfTwo = new ANPC(5, "wolfTwo", "jaws", 3);
         //public ANPC(int health, String name, String weapon, int damage)
 
-        loc0 = new ALocation(0,0,"You wake up in an empty field.  You don't know where you are, but you're feeling okay.  To the south west, and east, there is a forest that seems to be impassable.  To the north, there is a small stream and mountains in the distance.  On the ground, there is a small note. To interact with objects in a location, type openInventory to open the inventory menu, then follow those instructions.\n","help text for location: Go to the north lol", "location 0", note);
-        loc1 = new ALocation(0,1,"there is a stream, and there should be an enemy soon. There's also an item on the ground called testItem.","help text for location: 1 todo", "location 1",testItem);
-        firstCombatZone = new ALocation(0,2,"The forrest narrows, and you are attacked by two wolves!","PRINTING NEXT TEXT", "location 2", wolfOne, true, wolfTwo);
+        startingLocation = new ALocation(0,0,"You wake up in a small clearing.  To the south west, and east, there is a forest that seems to be impassable.  To the north, there is a small stream and mountains in the distance.  On the ground, there is a small note. To interact with objects in a location, type openInventory to open the inventory menu, then follow those instructions.\n","You get a feeling you should head north... (To do this, type 'up')", "location 0", note);
+        loc1 = new ALocation(0,1,"You walk north.  The forest continues on either side of your path.  On the ground, you see bloodstains and some tattered bits of clothing.  You also hear howling from an unknown animal in the distance.","The remnants of a conflict still litter the ground.", "location 1",testItem);
+        firstCombatZone = new ALocation(0,2,"The howling grows closer, and two wolves suddenly appear from the east-side forest! They attack you!","NEXTTEXT for this location", "location 2", wolfOne, true, wolfTwo, "Congratulations! You have completed the demo! In the future you should head east and explore the main story! Thank you for your time :)");
         //ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne, AnItem itemTwo, ANPC theNPCone, boolean combat, ANPC theNPCtwo)
         loc3 = new ALocation(1,0,"open3","help text for location: 3 todo", "location 3");
         loc4 = new ALocation(1,1,"open4","help text for location: 4 todo", "location 4");
@@ -270,8 +273,8 @@ public class Main {
 
 
 
-        currentLocation = loc0;
-        tempCurrLoc = loc0;
+        currentLocation = startingLocation;
+        tempCurrLoc = startingLocation;
         sc = new Scanner(System.in);
         pro = new APlayer();
     }

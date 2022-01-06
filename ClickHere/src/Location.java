@@ -39,4 +39,6 @@ public interface Location {
 
     void removeDeads();
 
+    String getPostCombat();
+
 }
