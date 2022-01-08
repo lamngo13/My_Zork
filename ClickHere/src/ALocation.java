@@ -1,68 +1,41 @@
-public class ALocation implements Location{
+public class ALocation{
     int _xCord, _yCord;
     String _openingText, _nextText, _name, _postCombat;
     boolean _shouldOpen;
-    boolean _shouldStartCombat;
+    boolean _combat;
     AnItem[] _items;
     ANPC[] _npcs;
 
-//_items = new Item[10];
-    //def gonna overload the constructor.  OR inherit it!
+
     public ALocation(int xCord, int yCord, String openingText, String helpText, String name) {
-        _items = new AnItem[10];
+        this(xCord, yCord, openingText, helpText, name, null, null, false, null);
+    }
+
+    //constructor with array of npcs as parameter
+    public ALocation(int xCord, int yCord, String openingText, String helpText, String name, ANPC[] theNPCLIST) {
+        this(xCord, yCord, openingText, helpText, name, null, theNPCLIST, false, null);
+    }
+
+
+    public ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem[] theItems) {
+        this(xCord, yCord, openingText, helpText, name, theItems, null, false, null);
+    }
+
+    // has both NPC list and Item list and combat stuff
+    public ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem[] theItems, ANPC[] theNPCLIST, boolean combat, String postCombat) {
         _xCord = xCord;
         _yCord = yCord;
         _openingText = openingText;
         _nextText = helpText;
         _name = name;
         _shouldOpen = true;
-    }
-
-    //intellej says theres a problem here?
-     public ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne) {
-        _items = new AnItem[10];
-        _items[0] = itemOne;
-        _xCord = xCord;
-        _yCord = yCord;
-        _openingText = openingText;
-         _nextText = helpText;
-        _name = name;
-        _shouldOpen = true;
-    }
-
-    //combat zone constructor
-    public ALocation(int xCord, int yCord, String openingText, String helpText, String name, ANPC theNPCone, boolean combat, ANPC theNPCtwo, String postCombat) {
-        _shouldStartCombat = true;
-        _npcs = new ANPC[10];
-        _npcs[0] = theNPCone;
-        _npcs[3] = theNPCtwo;
-        _items = new AnItem[10];
-        //_items[0] = itemOne;
-        //_items[1] = itemTwo;
-        _xCord = xCord;
-        _yCord = yCord;
-        _openingText = openingText;
-        _nextText = helpText;
-        _name = name;
-        _shouldOpen = true;
+        _items = theItems;
+        _npcs = theNPCLIST;
+        _combat = combat;
         _postCombat = postCombat;
     }
 
-    //big huge constructor
-     public ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne, AnItem itemTwo, ANPC theNPCone, ANPC theNPCtwo) {
-        _npcs = new ANPC[10];
-        _npcs[0] = theNPCone;
-        _npcs[3] = theNPCtwo;
-        _items = new AnItem[10];
-        _items[0] = itemOne;
-        _items[1] = itemTwo;
-        _xCord = xCord;
-        _yCord = yCord;
-        _openingText = openingText;
-         _nextText = helpText;
-        _name = name;
-        _shouldOpen = true;
-    }
+
 
     @Override
     public int getXCord() {
@@ -166,16 +139,6 @@ public class ALocation implements Location{
                 System.out.print(_npcs[i].getName() + ", ");
             }
         }
-    }
-
-    @Override
-    public boolean getCombat() {
-        return _shouldStartCombat;
-    }
-
-    @Override
-    public void setCombat(boolean toSet) {
-        _shouldStartCombat = toSet;
     }
 
     @Override

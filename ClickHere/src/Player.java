@@ -29,4 +29,7 @@ public interface Player {
     void setWealth(int newWealth);
 
     void discardItem(AnItem toBeDiscarded);
+
+    //shape TriangleBruh = new triangle(parameters)
+    //shape[]
 }

@@ -29,11 +29,12 @@ public class AnItem implements Item{
 
     @Override
     public void display() {
-        Main.myFormattedPrint(_flavortext);
+        //Main.myFormattedPrint(_flavortext);
         System.out.println();
         System.out.println("item name: " + _name);
         System.out.println("weight: " + _weight);
         System.out.println("damage: " + _damage);
+        System.out.println(_flavortext);
     }
 
     @Override

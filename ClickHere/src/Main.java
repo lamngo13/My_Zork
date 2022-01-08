@@ -1,10 +1,7 @@
 import java.util.*;
 public class Main {
 
-    //TODO HELLO THIS IS RUNABLE!!!!!
-    //TODO I had to configure my machine a bit strange for class, so if you're getting some system error, go to file > project structure and change the SDK and build it
-
-    //these are fields for them main class and in the main method, i create an instance of 'main' because forming the code with encapsulating methods makes it a lot more readable
+    //I had to configure my machine a bit strange for my course, so if you're getting some system error, go to file > project structure and change the SDK and build it
     boolean isPlaying;
     boolean hasOpened;
     boolean shouldOpenInventory;
@@ -76,55 +73,8 @@ public class Main {
                 inCombat = true;
             }
             while (inCombat) {
-                //inCombat = false;
-                System.out.print("You are in combat with: ");
-                currentLocation.listNPCs();
-                System.out.println();
-                for (int i = 0; i < 10; i++) {
-                    if (currentLocation.getSpecificNPC(i) != null) {
-                        System.out.print("The " + currentLocation.getSpecificNPC(i).getName() + "attacks you with its " + currentLocation.getSpecificNPC(i).getWeapon() + " for " + currentLocation.getSpecificNPC(i).getDamage() + " damage!");
-                        System.out.println();
-                        pro.loseHealth(currentLocation.getSpecificNPC(i).getDamage());
-                    }
-                }
-                System.out.println();
-                System.out.println("Your current health is: " + pro.getHealth());
-                System.out.print("Which target would you like to attack?: ");
-                currentLocation.listNPCs();
-                System.out.println();
-                target = sc.next();
-                //select the target
-                for (int j = 0; j < 10; j++) {
-                    if(currentLocation.getSpecificNPC(j) != null) {
-                        if (target.equals(currentLocation.getSpecificNPC(j).getName())) {
-                            theTarget = currentLocation.getSpecificNPC(j);
-                        }
-                    }
-                }
-                System.out.print("What item would you like to attack the target with? Give slot number:");
-                System.out.println();
-                pro.listInventory();
-                yourWeaponNumber = sc.nextInt();
-                attackingItem = pro.getInventory()[yourWeaponNumber];
-                System.out.println();
-                System.out.println("You attack the " + theTarget.getName() + " with your " + attackingItem.getName() + " for " + attackingItem.getDamage() + " damage!");
-                System.out.println();
-                theTarget.loseHealth(attackingItem.getDamage());
-                // this is just my thing for debugging
-                for (int l = 0; l < 10; l++) {
-                    if (currentLocation.getSpecificNPC(l) != null) {
-                        System.out.println("health of: " + currentLocation.getSpecificNPC(l).getName() + " is " + currentLocation.getSpecificNPC(l).getHealth());
-                        currentLocation.removeDeads();
-                        // test line!
-                    }
-                }
-                for (int m = 0; m < 10; m++) {
-                    inCombat = false;
-                    if (currentLocation.getSpecificNPC(m) != null) {
-                        inCombat = true;
-                        m = 10;
-                    }
-                }
+                bruhMachine();
+                //bruh machine is combat loop
             }
             //end combat loop
             if (currentLocation.getPostCombat() != null) {
@@ -209,7 +159,9 @@ public class Main {
             System.out.println("Your current coordinates are: ("
             + XasString +" , " + YasString + ")");
             //tell player where they are!
+            //2d array each index
             switch (XasString + YasString) {
+                // redo as 2d array of type location!!!!!!!!!!!!!!!!!!!!!!!!!!
                 case "00" -> currentLocation = startingLocation;
                 case "01" -> currentLocation = loc1;
                 case "02" -> currentLocation = firstCombatZone;
@@ -260,7 +212,7 @@ public class Main {
         wolfTwo = new ANPC(5, "wolfTwo", "jaws", 3);
         //public ANPC(int health, String name, String weapon, int damage)
 
-        startingLocation = new ALocation(0,0,"You wake up in a small clearing.  To the south west, and east, there is a forest that seems to be impassable.  To the north, there is a small stream and mountains in the distance.  On the ground, there is a small note. To interact with objects in a location, type openInventory to open the inventory menu, then follow those instructions.\n","You get a feeling you should head north... (To do this, type 'up')", "location 0", note);
+        startingLocation = new ALocation(0,0,"You wake up in a small clearing.  To the south, west, and east, there is a forest that seems to be impassable.  To the north, there is a stream and mountains in the distance.  On the ground, there is a small note. To interact with objects in a location, type openInventory to open the inventory menu, then follow those instructions.\n","You get a feeling you should head north... (To do this, type 'up')", "location 0", note);
         loc1 = new ALocation(0,1,"You walk north.  The forest continues on either side of your path.  On the ground, you see bloodstains and some tattered bits of clothing.  You also hear howling from an unknown animal in the distance.","The remnants of a conflict still litter the ground.", "location 1",testItem);
         firstCombatZone = new ALocation(0,2,"The howling grows closer, and two wolves suddenly appear from the east-side forest! They attack you!","NEXTTEXT for this location", "location 2", wolfOne, true, wolfTwo, "Congratulations! You have completed the demo! In the future you should head east and explore the main story! Thank you for your time :)");
         //ALocation(int xCord, int yCord, String openingText, String helpText, String name, AnItem itemOne, AnItem itemTwo, ANPC theNPCone, boolean combat, ANPC theNPCtwo)
@@ -280,7 +232,9 @@ public class Main {
     }
 
     //static function that automatically makes a new line so very long strings don't go off the screen
-    //I must be missing something haha because this took a while to code! Because for a while it would cut off mid-word
+    //asdfasdfasdfasdfuse this took a while to code! Because for a while it would cut off mid-word
+    //I must be missing something haha because this took a while to code!
+
     public static void myFormattedPrint(String theString) {
         int currStringLength = theString.length();
         int counter = 0;
@@ -291,11 +245,6 @@ public class Main {
 
         while (!areWeDone) {
             System.out.print(theString.charAt(counter));
-            //new stuff
-            //if (theString.charAt(counter) == '\n') {
-              //  counter = 0;
-            //}
-            //end new stuff
             if (shouldNewLineNext && theString.charAt(counter) == ' ') {
                 shouldNewLineNext = false;
                 System.out.print("\n");
@@ -373,6 +322,57 @@ public class Main {
             // not 100% sure on switch statements
             default -> {
                 myFormattedPrint("Error: invalid input. Current acceptable commands are (listCommands/up/down/left/right/openInventory/help/currentLocation)");
+            }
+        }
+    }
+
+    public void bruhMachine() {
+        System.out.print("You are in combat with: ");
+        currentLocation.listNPCs();
+        System.out.println();
+        for (int i = 0; i < 10; i++) {
+            if (currentLocation.getSpecificNPC(i) != null) {
+                System.out.print("The " + currentLocation.getSpecificNPC(i).getName() + "attacks you with its " + currentLocation.getSpecificNPC(i).getWeapon() + " for " + currentLocation.getSpecificNPC(i).getDamage() + " damage!");
+                System.out.println();
+                pro.loseHealth(currentLocation.getSpecificNPC(i).getDamage());
+            }
+        }
+        System.out.println();
+        System.out.println("Your current health is: " + pro.getHealth());
+        System.out.print("Which target would you like to attack?: ");
+        currentLocation.listNPCs();
+        System.out.println();
+        target = sc.next();
+        //select the target
+        for (int j = 0; j < 10; j++) {
+            if(currentLocation.getSpecificNPC(j) != null) {
+                if (target.equals(currentLocation.getSpecificNPC(j).getName())) {
+                    theTarget = currentLocation.getSpecificNPC(j);
+                }
+            }
+        }
+        System.out.print("What item would you like to attack the target with? Give slot number:");
+        System.out.println();
+        pro.listInventory();
+        yourWeaponNumber = sc.nextInt();
+        attackingItem = pro.getInventory()[yourWeaponNumber];
+        System.out.println();
+        System.out.println("You attack the " + theTarget.getName() + " with your " + attackingItem.getName() + " for " + attackingItem.getDamage() + " damage!");
+        System.out.println();
+        theTarget.loseHealth(attackingItem.getDamage());
+        // this is just my thing for debugging
+        for (int l = 0; l < 10; l++) {
+            if (currentLocation.getSpecificNPC(l) != null) {
+                System.out.println("health of: " + currentLocation.getSpecificNPC(l).getName() + " is " + currentLocation.getSpecificNPC(l).getHealth());
+                currentLocation.removeDeads();
+                // test line!
+            }
+        }
+        for (int m = 0; m < 10; m++) {
+            inCombat = false;
+            if (currentLocation.getSpecificNPC(m) != null) {
+                inCombat = true;
+                m = 10;
             }
         }
     }
